@@ -260,7 +260,7 @@ def import_state_dict(old, new, mapping=None, raw=False, raw_prefix=''):
           print("resuming %s := %r" %(k, v))
       else:
           print("resuming %s" % k)
-      if k == "state_dict":
+      if k in [ "state_dict", "model"]:
           checkpoint = v
 
     if checkpoint is None:
