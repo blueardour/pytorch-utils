@@ -1,8 +1,5 @@
-import shutil
-import os
+import os, sys
 import logging.config
-import json
-import pandas as pd
 
 def setup_logging(log_file='info.txt', resume=False, dummy=False, stdout=True):
     """
@@ -33,4 +30,45 @@ def setup_logging(log_file='info.txt', resume=False, dummy=False, stdout=True):
             console.setFormatter(formatter)
             logging.getLogger('').addHandler(console)
 
+
+class text_logger(object):
+    def __init__(self, log_file, colored=False):
+        ENDC = '\033[0m'
+        HEADER = '\033[95m'
+        OKBLUE = '\033[94m'
+        OKGREEN = '\033[92m'
+        WARNING = '\033[93m'
+        FAIL = '\033[91m'
+        ENDC = '\033[0m'
+        BOLD = '\033[1m'
+        UNDERLINE = '\033[4m'
+
+        self.log_file = sys.stdout
+        if isinstance(log_file, str):
+            if os.path.isfile(log_file):
+                self.log_file = open(log_file, 'a')
+            else:
+                self.log_file = open(log_file, 'w')
+
+        elif hasattr(log_file, 'closed') and log_file.closed == False:
+            self.log_file = log_file
+
+        self.ic = '' 
+        self.wc = '' 
+        self.ec = '' 
+        self.nc = '' 
+        if colored:
+            self.ic = OKGREEN
+            self.wc = WARNING
+            self.ec = FAIL
+            self.nc = ENDC
+
+    def info(self, string):
+        print("{}info ==>{} {}".format(self.ic, self.nc, string), file=self.log_file)
+
+    def warning(self, string):
+        print("{}info ==>{} {}".format(self.wc, self.nc, string), file=self.log_file)
+
+    def error(self, string):
+        print("{}info ==>{} {}".format(self.ec, self.nc, string), file=self.log_file)
 
