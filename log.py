@@ -18,7 +18,7 @@ def setup_logging(log_file='info.txt', resume=False, dummy=False, stdout=True):
         if root_logger.handlers:
             root_logger.handlers[0].close()
             root_logger.removeHandler(root_logger.handlers[0])
-        logging.basicConfig(level=logging.WARNING,
+        logging.basicConfig(level=logging.DEBUG,
                             format="%(asctime)s - %(levelname)s - %(message)s",
                             datefmt="%Y-%m-%d %H:%M:%S",
                             filename=log_file,
