@@ -175,7 +175,10 @@ def save_checkpoint(state, is_best, args):
         epoch = state['epoch']
         shutil.copy(args.resume_file, os.path.join(args.weights_dir, args.case + '-epoch' + str(epoch) + '-checkpoint.pth.tar'))
 
-def load_state_dict(model, state_dict, resume_scope='', unresume_scope='', verbose=False):
+def load_state_dict(model, state_dict, resume_scope='', unresume_scope='', verbose=False, logger=None):
+    if logger is None:
+      logger = logging
+
     checkpoint = state_dict
     # remove the module in the parallel model
     if 'module.' in list(checkpoint.items())[0][0]:
@@ -215,7 +218,7 @@ def load_state_dict(model, state_dict, resume_scope='', unresume_scope='', verbo
         if k in model.state_dict():
             shape = model.state_dict()[k].shape
             if v.shape != shape:
-                logging.info("=> warning: {} shape mismatch {} vs {}".format(k, v.shape, shape))
+                logger.info("=> warning: {} shape mismatch {} vs {}".format(k, v.shape, shape))
                 v = v.reshape(shape)
             pretrained_dict[k] = v
 
@@ -224,18 +227,18 @@ def load_state_dict(model, state_dict, resume_scope='', unresume_scope='', verbo
     unresume_dict = set(checkpoint) - set(pretrained_dict)
     unused_dict = set(checkpoint_disk) - set(pretrained_dict)
     if len(unresume_dict) != 0:
-        logging.info("=> UNResume weigths:")
+        logger.info("=> UNResume weigths:")
         for item in sorted(unresume_dict):
-            logging.info('-> %r' % item)
+            logger.info('-> %r' % item)
         if verbose:
             print("=> UNResume weigths:")
             for item in sorted(unresume_dict):
                 print('%r' % item)
 
     if len(unused_dict) != 0:
-        logging.info("=> UNUsed weigths:")
+        logger.info("=> UNUsed weigths:")
         for item in sorted(unused_dict):
-            logging.info("-> %r" % item)
+            logger.info("-> %r" % item)
         if verbose:
             print("=> UNUsed weigths:")
             for item in sorted(unused_dict):

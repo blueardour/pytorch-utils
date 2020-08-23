@@ -65,10 +65,13 @@ class text_logger(object):
 
     def info(self, string):
         print("{}info ==>{} {}".format(self.ic, self.nc, string), file=self.log_file)
+        print("{}info ==>{} {}".format(self.ic, self.nc, string))
 
     def warning(self, string):
         print("{}info ==>{} {}".format(self.wc, self.nc, string), file=self.log_file)
+        print("{}info ==>{} {}".format(self.wc, self.nc, string))
 
     def error(self, string):
         print("{}info ==>{} {}".format(self.ec, self.nc, string), file=self.log_file)
+        print("{}info ==>{} {}".format(self.ec, self.nc, string))
 
