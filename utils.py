@@ -219,7 +219,11 @@ def load_state_dict(model, state_dict, resume_scope='', unresume_scope='', verbo
             shape = model.state_dict()[k].shape
             if v.shape != shape:
                 logger.info("=> warning: {} shape mismatch {} vs {}".format(k, v.shape, shape))
-                v = v.reshape(shape)
+                try:
+                    v = v.reshape(shape)
+                except RuntimeError as e:
+                    logger.info("=> warning: skip recovering {}".format(k))
+                    continue
             pretrained_dict[k] = v
 
     checkpoint = model.state_dict()
