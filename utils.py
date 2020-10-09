@@ -7,7 +7,10 @@ import logging
 from gpuinfo import GPUInfo
 
 def gpu_info():
-    percent, memory = GPUInfo.gpu_usage()
+    try:
+        percent, memory = GPUInfo.gpu_usage()
+    except ValueError:
+        return "Error when read GPU utilization"
     return "precent: %r, memory: %r" % (percent, memory)
 
 def accuracy(output, target, topk=(1,)):
