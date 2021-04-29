@@ -56,6 +56,10 @@ def get_parser():
     parser.add_argument('--tensorboard', action='store_true', default=False)
     parser.add_argument('--verbose', action='store_true', default=False)
 
+    # KD
+    parser.add_argument('--distill_teacher', type=str, default='', help='teacher model used for KD')
+    parser.add_argument('--distill_loss_alpha', type=float, default=0.0, help='loss alpha used for KD')
+
     parser.add_argument('--case', type=str, default='official', help='identify the configuration of the training')
     parser.add_argument('--keyword', default='pretrain', type=str, help='key features')
     return parser
