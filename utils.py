@@ -335,3 +335,27 @@ def check_pid(pid):
     else:
         return True
 
+def load_pretrained(model, args, logger=None):
+    if logger is None:
+        logger = logging
+
+    if check_file(args.pretrained):
+        logger.info("load pretrained from %s" % args.pretrained)
+        if torch.cuda.is_available():
+            checkpoint = torch.load(args.pretrained)
+        else:
+            checkpoint = torch.load(args.pretrained, map_location='cpu')
+        logger.info("load pretrained ==> last epoch: %d" % checkpoint.get('epoch', 0))
+        logger.info("load pretrained ==> last best_acc: %f" % checkpoint.get('best_acc', 0))
+        logger.info("load pretrained ==> last learning_rate: %f" % checkpoint.get('learning_rate', 0))
+        #if 'learning_rate' in checkpoint:
+        #    lr = checkpoint['learning_rate']
+        #    logger.info("resuming ==> learning_rate: %f" % lr)
+        try:
+            load_state_dict(model, checkpoint.get('state_dict', checkpoint.get('model', checkpoint)))
+        except RuntimeError as err:
+            logger.info("Loading pretrained model failed %r" % err)
+    else:
+        logger.info("no pretrained file exists({}), init model with default initlizer".
+            format(args.pretrained))
+
