@@ -39,5 +39,5 @@ def loss_fn_kd(outputs, labels, teacher_outputs, params):
                                  F.softmax(teacher_outputs/T, dim=1)) * (T * T)
 
     loss = base_loss * (1. - alpha) + distillation_loss * alpha
-    return KD_loss
+    return loss
 
