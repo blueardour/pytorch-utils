@@ -28,9 +28,12 @@ def loss_fn_kd(outputs, labels, teacher_outputs, params):
     NOTE: the KL Divergence for PyTorch comparing the softmaxs of teacher
     and student expects the input tensor to be log probabilities! See Issue #2
     """
-    base_loss = F.cross_entropy(outputs, labels)
-
     alpha = params.distill_loss_alpha
+    if alpha < 1.0:
+        loss = F.cross_entropy(outputs, labels) * (1. - alpha)
+    else:
+        loss = 0
+
     if hasattr(params, 'distill_loss_type') and params.distill_loss_type == 'hard':
         distillation_loss = F.cross_entropy(outputs, teacher_outputs.argmax(dim=1))
     else:
@@ -38,6 +41,6 @@ def loss_fn_kd(outputs, labels, teacher_outputs, params):
         distillation_loss = nn.KLDivLoss()(F.log_softmax(outputs/T, dim=1),
                                  F.softmax(teacher_outputs/T, dim=1)) * (T * T)
 
-    loss = base_loss * (1. - alpha) + distillation_loss * alpha
+    loss = loss + distillation_loss * alpha
     return loss
 
