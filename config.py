@@ -62,6 +62,9 @@ def get_parser():
     parser.add_argument('--distill_loss_temperature', type=float, default=5, help='loss temperature used for KD')
     parser.add_argument('--distill_loss_type', type=str, default='soft', help='loss type for KD')
 
+    # repvgg
+    parser.add_argument('--repvgg_block', type=str, default='', help='repvgg blocks')
+
     parser.add_argument('--case', type=str, default='official', help='identify the configuration of the training')
     parser.add_argument('--keyword', default='pretrain', type=str, help='key features')
     return parser
