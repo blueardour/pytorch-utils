@@ -1,0 +1,4 @@
+
+onnx==1.6.0
+onnxoptimizer==0.2.6
+onnxruntime
