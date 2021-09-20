@@ -41,6 +41,7 @@ def get_parser():
 
     parser.add_argument('--wakeup', default=0, type=int)
     parser.add_argument('--wakeup_epoch', default=0, type=int)
+    parser.add_argument('--wakeup_lr', default=0, type=float)
     parser.add_argument('--stable', default=0, type=int)
     parser.add_argument('--stable_epoch', default=0, type=int)
     parser.add_argument('--extra_epoch', default=0, type=int)

@@ -59,7 +59,7 @@ def setting_learning_rate(optimizer, epoch, train_length, checkpoint, args, sche
             for group in optimizer.param_groups:
                 if 'lr_constant' in group:
                     group['lr'] = group['lr_constant']
-        lr_list = scheduler.get_lr()
+        lr_list = scheduler.get_last_lr()
         if isinstance(lr_list, list):
             lr = lr_list[0]
         else:
@@ -90,7 +90,7 @@ def setting_learning_rate(optimizer, epoch, train_length, checkpoint, args, sche
         if epoch != 0:
             scheduler.step()
 
-        lr_list = scheduler.get_lr()
+        lr_list = scheduler.get_last_lr()
         if isinstance(lr_list, list):
             lr = lr_list[0]
         else:
