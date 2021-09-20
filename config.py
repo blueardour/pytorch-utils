@@ -40,10 +40,9 @@ def get_parser():
     parser.add_argument('--opt_level', default='O0', type=str)
 
     parser.add_argument('--wakeup', default=0, type=int)
-    parser.add_argument('--warmup', default=0, type=int)
+    parser.add_argument('--wakeup_epoch', default=0, type=int)
     parser.add_argument('--stable', default=0, type=int)
     parser.add_argument('--stable_epoch', default=0, type=int)
-    parser.add_argument('--warmup_epoch', default=0, type=int)
     parser.add_argument('--extra_epoch', default=0, type=int)
     parser.add_argument('--delay', default=0, type=float)
 
