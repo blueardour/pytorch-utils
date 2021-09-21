@@ -34,6 +34,7 @@ def get_parser():
 
     parser.add_argument('--distributed', action='store_true', default=False)
     parser.add_argument('--world_size', type=int, default=1)
+    parser.add_argument('--rank', type=int, default=0)
 
     parser.add_argument('--fp16', default=False, action='store_true')
     parser.add_argument('--sync_bn', default=False, action='store_true')

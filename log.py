@@ -1,19 +1,22 @@
 import os, sys
 import logging.config
 
-def setup_logging(log_file='info.txt', resume=False, dummy=False, stdout=True):
+def setup_logging(log_file='info.txt', resume=False, dummy=False, stdout=True, rank=0):
     """
     Setup logging configuration
     """
     if dummy:
         logging.getLogger('dummy')
     else:
+        logging.shutdown() # shutdown all logging before
+        if rank != 0:
+            return
+
         if os.path.isfile(log_file) and resume:
             file_mode = 'a'
         else:
             file_mode = 'w'
 
-        logging.shutdown() # shutdown all logging before
         root_logger = logging.getLogger()
         if root_logger.handlers:
             root_logger.handlers[0].close()
@@ -29,7 +32,6 @@ def setup_logging(log_file='info.txt', resume=False, dummy=False, stdout=True):
             formatter = logging.Formatter('%(message)s')
             console.setFormatter(formatter)
             logging.getLogger('').addHandler(console)
-
 
 class text_logger(object):
     def __init__(self, log_file, colored=False):
