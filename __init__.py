@@ -8,4 +8,5 @@ from .utils import gpu_info
 from .utils import check_pid
 from .config import get_config, get_parser
 from .loss import CrossEntropyLabelSmooth, loss_fn_kd
+from . import comm
 
