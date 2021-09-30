@@ -53,6 +53,7 @@ def get_parser():
     parser.add_argument('--resume', '-r', action='store_true', default=False, help='resume training')
     parser.add_argument('--resume_file', type=str, default='checkpoint.pth.tar')
     parser.add_argument('--weights_dir', type=str, default='./weights/', help='save weights directory')
+    parser.add_argument('--unresume_scope', type=str, default='')
     parser.add_argument('--log_dir', type=str, default='exp', help='experiment name')
     parser.add_argument('--tensorboard', action='store_true', default=False)
     parser.add_argument('--verbose', action='store_true', default=False)

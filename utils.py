@@ -352,7 +352,8 @@ def load_pretrained(model, args, logger=None):
         #    lr = checkpoint['learning_rate']
         #    logger.info("resuming ==> learning_rate: %f" % lr)
         try:
-            load_state_dict(model, checkpoint.get('state_dict', checkpoint.get('model', checkpoint)))
+            load_state_dict(model, checkpoint.get('state_dict', checkpoint.get('model', checkpoint)), \
+                unresume_scope=getattr(args, 'unresume_scope', ''))
         except RuntimeError as err:
             logger.info("Loading pretrained model failed %r" % err)
     else:
