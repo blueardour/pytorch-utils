@@ -45,7 +45,7 @@ def setting_learning_rate(optimizer, epoch, train_length, checkpoint, args, sche
             step = step * train_length
 
             if args.lr_policy == 'sgdr_step':
-                lr = utils.adjust_learning_rate(optimizer, epoch, args)
+                lr = adjust_learning_rate(optimizer, epoch, args)
                 for group in optimizer.param_groups:
                     group['initial_lr'] = lr
                 logging.info('warning: update sgdr initial_lr')
