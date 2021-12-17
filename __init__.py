@@ -7,6 +7,6 @@ from .utils import AverageMeter
 from .utils import gpu_info
 from .utils import check_pid
 from .config import get_config, get_parser
-from .loss import CrossEntropyLabelSmooth, loss_fn_kd
+from .loss import CrossEntropyLabelSmooth, loss_fn_kd, FocalLoss
 from . import comm
 
