@@ -70,6 +70,10 @@ def get_parser():
     parser.add_argument('--case', type=str, default='official', help='identify the configuration of the training')
     parser.add_argument('--keyword', default='pretrain', type=str, help='key features')
 
+    # focal loss
+    parser.add_argument('--focal_gamma', default=2.0, type=float, help='focal loss gamma')
+    parser.add_argument('--focal_alpha', default=-1., type=float, help='focal loss alpha')
+
     # debug
     parser.add_argument('--cmd', default='rclone+copy+LOG+DST', type=str, help='command to run at the end of first epcoh')
     return parser
