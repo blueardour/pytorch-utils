@@ -4,6 +4,7 @@ import torch.distributed as dist
 import shutil
 import os
 import logging
+import pdb
 from gpuinfo import GPUInfo
 
 def gpu_info():
@@ -286,6 +287,7 @@ def import_state_dict(old, new, mapping=None, raw=False, raw_prefix=''):
                   print("mapping %s to %s" % (name, name.replace(k, v)))
                 else:
                   pretrained_dict[name] = value
+        #pdb.set_trace()
         checkpoint = pretrained_dict
 
     if raw:
