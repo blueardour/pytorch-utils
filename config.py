@@ -76,6 +76,10 @@ def get_parser():
 
     # debug
     parser.add_argument('--cmd', default='rclone+copy+LOG+DST', type=str, help='command to run at the end of first epcoh')
+
+    # for image normalization
+    parser.add_argument('--mean', default=None, type=str, help='image mean')
+    parser.add_argument('--std', default=None, type=str, help='image std')
     return parser
 
 def get_config():
@@ -86,5 +90,9 @@ def get_config():
         args.lr_custom_step = [int(x) for x in args.lr_custom_step.split(',')]
     if isinstance(args.keyword, str):
         args.keyword = [x.strip() for x in args.keyword.split(',')]
+    if isinstance(args.mean, str):
+        args.mean = [float(x.strip()) for x in args.mean.split(',')]
+    if isinstance(args.std, str):
+        args.std = [float(x.strip()) for x in args.std.split(',')]
     return args
 
