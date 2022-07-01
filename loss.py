@@ -43,7 +43,7 @@ def loss_fn_kd(outputs, labels, teacher_outputs, params):
             predict = F.log_softmax(outputs/T, dim=1)
             targets = F.softmax(teacher_outputs/T, dim=1)
             predict = predict.unsqueeze(2)
-            targets = targets..unsqueeze(1)
+            targets = targets.unsqueeze(1)
             distillation_loss = -torch.bmm(targets, predict)
             distillation_loss = distillation_loss.mean()
 
