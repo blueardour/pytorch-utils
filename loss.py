@@ -34,15 +34,32 @@ def loss_fn_kd(outputs, labels, teacher_outputs, params):
     else:
         loss = 0
 
-    if hasattr(params, 'distill_loss_type') and params.distill_loss_type == 'hard':
-        distillation_loss = F.cross_entropy(outputs, teacher_outputs.argmax(dim=1))
+    T = getattr(params, 'distill_loss_temperature', 1.)
+    if hasattr(params, 'distill_loss_type'):
+        if params.distill_loss_type == 'hard':
+            distillation_loss = F.cross_entropy(outputs, teacher_outputs.argmax(dim=1))
+
+        elif params.distill_loss_type == 'soft-b':
+            predict = F.log_softmax(outputs/T, dim=1)
+            targets = F.softmax(teacher_outputs/T, dim=1)
+            predict = predict.unsqueeze(2)
+            targets = targets..unsqueeze(1)
+            distillation_loss = -torch.bmm(targets, predict)
+            distillation_loss = distillation_loss.mean()
+
+        elif params.distill_loss_type == 'soft':
+            predict = F.log_softmax(outputs/T, dim=1)
+            targets = F.softmax(teacher_outputs/T, dim=1)
+            distillation_loss = nn.KLDivLoss()(predict, targets) * (T * T)
+
+        else:
+            raise RuntimeError("non-known distill_loss_type: {}".format(params.distill_loss_type))
     else:
-        T = params.distill_loss_temperature
-        distillation_loss = nn.KLDivLoss()(F.log_softmax(outputs/T, dim=1),
-                                 F.softmax(teacher_outputs/T, dim=1)) * (T * T)
+        raise RuntimeError("non-known distill_loss_type")
 
     loss = loss + distillation_loss * alpha
     return loss
+
 
 class FocalLoss(nn.Module):
     def __init__(self, use_sigmoid=True, alpha=-1., gamma=2., reduction='none'):
