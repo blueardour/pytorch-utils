@@ -1,4 +1,4 @@
-
+import logging
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -57,6 +57,8 @@ def loss_fn_kd(outputs, labels, teacher_outputs, params):
     else:
         raise RuntimeError("non-known distill_loss_type")
 
+    #if hasattr(params, 'keyword') and 'debug' in params.keyword:
+    #    logging.info('loss: cross entropy ({}), KD loss ({})'.format(loss.item(), distillation_loss.item()))
     loss = loss + distillation_loss * alpha
     return loss
 
