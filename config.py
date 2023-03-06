@@ -6,7 +6,8 @@ def get_parser():
     parser = argparse.ArgumentParser(description="Pytorch training")
     parser.add_argument('--dataset', type=str, default='imagenet', help='dataset name')
     parser.add_argument('--root', type=str, default='/data/imagenet/', help='dataset root')
-    parser.add_argument('--model', '-m', '--arch', default='resnet18', type=str)
+    parser.add_argument('--model', '-m', default='resnet18', type=str)
+    parser.add_argument('--arch', default='resnet18', type=str)
 
     parser.add_argument('--epochs', type=int, default=40, help='num of training epochs')
     parser.add_argument('--addition_augment', '--aa', action='store_true', default=False)
