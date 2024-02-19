@@ -5,10 +5,10 @@ import shutil
 import os
 import logging
 import pdb
-from gpuinfo import GPUInfo
 
 def gpu_info():
     try:
+        from gpuinfo import GPUInfo
         percent, memory = GPUInfo.gpu_usage()
     except ValueError:
         return "Error when read GPU utilization"
