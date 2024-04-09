@@ -5,9 +5,9 @@ import argparse
 def get_parser():
     parser = argparse.ArgumentParser(description="Pytorch training")
     parser.add_argument('--dataset', type=str, default='imagenet', help='dataset name')
-    parser.add_argument('--root', type=str, default='/data/imagenet/', help='dataset root')
+    parser.add_argument('--root', type=str, default='/workspace/data/imagenet/', help='dataset root')
     parser.add_argument('--model', '-m', default='resnet18', type=str)
-    parser.add_argument('--arch', default='resnet18', type=str)
+    parser.add_argument('--arch', default=None, type=str)
 
     parser.add_argument('--epochs', type=int, default=40, help='num of training epochs')
     parser.add_argument('--addition_augment', '--aa', action='store_true', default=False)
@@ -53,9 +53,9 @@ def get_parser():
     parser.add_argument('--pretrained', dest='pretrained', default="", type=str)
     parser.add_argument('--resume', '-r', action='store_true', default=False, help='resume training')
     parser.add_argument('--resume_file', type=str, default='checkpoint.pth.tar')
-    parser.add_argument('--weights_dir', type=str, default='./weights/', help='save weights directory')
+    parser.add_argument('--weights_dir', type=str, default=None, help='save weights directory')
     parser.add_argument('--unresume_scope', type=str, default='')
-    parser.add_argument('--log_dir', type=str, default='exp', help='experiment name')
+    parser.add_argument('--log_dir', type=str, default=None, help='experiment name')
     parser.add_argument('--tensorboard', action='store_true', default=False)
     parser.add_argument('--verbose', action='store_true', default=False)
 
