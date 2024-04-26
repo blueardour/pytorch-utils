@@ -50,7 +50,7 @@ def get_parser():
     parser.add_argument('--delay', default=0, type=float)
 
     parser.add_argument('--evaluate', '-e', action='store_true', default=False)
-    parser.add_argument('--pretrained', dest='pretrained', default=None, type=str)
+    parser.add_argument('--pretrained', dest='pretrained', default=True, type=str)
     parser.add_argument('--resume', '-r', action='store_true', default=False, help='resume training')
     parser.add_argument('--resume_file', type=str, default='checkpoint.pth.tar')
     parser.add_argument('--weights_dir', type=str, default=None, help='save weights directory')
