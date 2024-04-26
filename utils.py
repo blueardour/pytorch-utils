@@ -310,7 +310,7 @@ def import_state_dict(old, new, mapping=None, raw=False, raw_prefix=''):
 
 def check_folder(folder):
   if not os.path.exists(folder):
-    os.mkdir(folder)
+    os.makedirs(folder)
 
 def check_file(fname):
   return os.path.isfile(fname)
